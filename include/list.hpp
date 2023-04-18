@@ -8,22 +8,19 @@ private:
         T data;
         node *next;
     };
-    
-    class Iter{
+
+    class Iter {
     private:
-        node* p;
+        node *p;
+
     public:
-        Iter(node* n):p(n){}
-        Iter& operator++(){
+        Iter(node *n) : p(n) {}
+        Iter &operator++() {
             p = p->next;
             return *this;
         }
-        bool operator==(Iter& other){
-            return p == other.p;
-        }
-        bool operator!=(Iter& other){
-            return p != other.p;
-        }
+        bool operator==(Iter &other) { return p == other.p; }
+        bool operator!=(Iter &other) { return p != other.p; }
     };
     int length = 0;
     node *begin = nullptr;
@@ -31,11 +28,11 @@ private:
 
 public:
     int len() { return length; };
-    void append(T data){
+    void append(T data) {
         auto n_node = new node(data);
-        if(length == 0){
+        if (length == 0) {
             end = begin = n_node;
-        }else{
+        } else {
             end->next = n_node;
             end = n_node;
         }
