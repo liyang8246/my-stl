@@ -5,6 +5,7 @@ class List {
 private:
     struct node {
         node(T data) : data(data){};
+        node(T data, node *next) : data(data), next(next){};
         T data;
         node *next;
     };
@@ -29,11 +30,13 @@ public:
         bool operator!=(const Iter &other) const { return p != other.p; }
     };
 
+    Iter begin() { return Iter(begin_p); }
+    Iter end() { return Iter(nullptr); }
     int len() { return length; };
 
     void append(T data) {
         using namespace std;
-        auto n_node = new node(data);
+        auto n_node = new node(data, nullptr);
         if (length == 0) {
             end_p = begin_p = n_node;
         } else {
@@ -43,6 +46,31 @@ public:
         length += 1;
     }
 
-    Iter begin() { return Iter(begin_p); }
-    Iter end() { return Iter(nullptr); }
+    T pop(int index) {
+        node *p = begin_p;
+        T re;
+        if (index) {
+            node *q;
+            while (index--) {
+                q = p;
+                p = p->next;
+            }
+            re = p->data;
+            q->next = p->next;
+            delete p;
+        } else {
+            node *temp = begin_p;
+            re = begin_p->data;
+            delete begin_p;
+            begin_p = temp->next;
+        }
+        return re;
+    }
+    std::ostream &operator<<(std::ostream &os);
 };
+
+template <class T>
+std::ostream &List<T>::operator<<(std::ostream &os) {
+    std::cout << "hi";
+    return os;
+}
